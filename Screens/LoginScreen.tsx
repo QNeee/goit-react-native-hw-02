@@ -16,7 +16,7 @@ const LoginScreen = ({ changeScrenn }: Props) => {
     const handleMail = (text: string) => setMail(text.toString());
     const handlePassword = (text: string) => setPassword(text.toString());
 
-    const register = () => {
+    const login = () => {
         if (!mail || !password) { alert("Enter all data pleace!!!"); return }
         console.log(`Email: ${mail}, Password: ${password}`)
     }
@@ -42,7 +42,7 @@ const LoginScreen = ({ changeScrenn }: Props) => {
                     <Text style={styles.passwShowText}>{!show ? 'Показать' : "Скрыть"}</Text>
                 </TouchableOpacity>
                 {!button && <View style={styles.btnContainer}>
-                    <TouchableOpacity style={styles.registerButton} activeOpacity={0.5} onPress={register}>
+                    <TouchableOpacity style={styles.registerButton} activeOpacity={0.5} onPress={login}>
                         <Text style={styles.registerButtonText}>Войти</Text>
                     </TouchableOpacity>
 
