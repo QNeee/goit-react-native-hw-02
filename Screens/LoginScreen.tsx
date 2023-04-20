@@ -34,13 +34,14 @@ const LoginScreen = ({ changeScrenn }: Props) => {
             <View style={styles.container}>
 
                 <Text style={styles.title}>Войти</Text>
-                <TextInput style={styles.inputMailPassw} placeholder="Email address" inputMode="email" value={mail} onChangeText={handleMail} onFocus={onFocusInput} onBlur={onBlurInput} />
-                <TextInput style={styles.inputMailPassw} placeholder="Password" secureTextEntry={!show ? true : false} value={password} onChangeText={handlePassword} onFocus={onFocusInput} onBlur={onBlurInput} />
-
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.inputMailPassw} placeholder="Email address" inputMode="email" value={mail} onChangeText={handleMail} onFocus={onFocusInput} onBlur={onBlurInput} />
+                    <TextInput style={styles.inputMailPassw} placeholder="Password" secureTextEntry={!show ? true : false} value={password} onChangeText={handlePassword} onFocus={onFocusInput} onBlur={onBlurInput} />
+                </View>
                 <TouchableOpacity style={styles.passwShow} activeOpacity={0.5} onPress={passwShow}>
                     <Text style={styles.passwShowText}>{!show ? 'Показать' : "Скрыть"}</Text>
                 </TouchableOpacity>
-                {!button && <View>
+                {!button && <View style={styles.btnContainer}>
                     <TouchableOpacity style={styles.registerButton} activeOpacity={0.5} onPress={register}>
                         <Text style={styles.registerButtonText}>Войти</Text>
                     </TouchableOpacity>
@@ -61,9 +62,14 @@ const styles = StyleSheet.create({
         width: '100%',
         borderTopRightRadius: 25,
         borderTopLeftRadius: 25,
+        maxHeight: 489
+    },
+    inputContainer: {
+        marginTop: 33
     },
     containerKeyB: {
         justifyContent: "flex-end",
+        alignItems: 'center'
     },
     pfotoContainer: {
         marginTop: -60,
@@ -98,6 +104,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 19,
     },
+    btnContainer: {
+        marginBottom: 144
+    },
     inputMailPassw: {
         backgroundColor: '#F6F6F6',
         width: 343,
@@ -131,7 +140,7 @@ const styles = StyleSheet.create({
     },
     registerButtonText: {
         color: '#fff',
-        fontWeight: '400'
+        fontWeight: '400',
     },
     loginLink: {
         marginTop: 16,

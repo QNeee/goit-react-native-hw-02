@@ -1,19 +1,25 @@
 import {
     StyleSheet, Text, ImageBackground,
     View, TouchableOpacity, TextInput, KeyboardAvoidingView,
-    Platform
+    Platform,
+    Image
 } from "react-native";
 import React, { useState } from "react";
-
 interface Props {
     changeScrenn: (screen: number) => void;
 }
 const RegistrationScreen = ({ changeScrenn }: Props) => {
-
+    const [button, setButton] = useState(false);
     const [login, setLogin] = useState('');
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [show, SetShow] = useState(false);
+    const onFocusInput = () => {
+        setButton(true)
+    }
+    const onBlurInput = () => {
+        setButton(false);
+    }
     const handleLogin = (text: string) => { setLogin(text) };
     const handleMail = (text: string) => { setMail(text) };
     const handlePassword = (text: string) => { setPassword(text) };
@@ -23,8 +29,7 @@ const RegistrationScreen = ({ changeScrenn }: Props) => {
         console.log(`Login: ${login}, Email: ${mail}, Password: ${password}`)
     }
 
-    const passwShow = () => alert(`Your password is: ${password}`);
-
+    const passwShow = () => SetShow(!show);
     return (
         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.containerKeyB} >
             <View style={styles.container}>
@@ -33,24 +38,24 @@ const RegistrationScreen = ({ changeScrenn }: Props) => {
                         <ImageBackground source={require('../images/add.png')} style={{ width: '100%', height: '100%' }}></ImageBackground>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.title}>Registration</Text>
+                <Text style={styles.title}>Регистрация</Text>
 
-                <TextInput style={styles.inputLogin} placeholder="Login" inputMode="text" value={login} onChangeText={handleLogin} />
-                <TextInput style={styles.inputMailPassw} placeholder="Email address" inputMode="email" value={mail} onChangeText={handleMail} />
-                <TextInput style={styles.inputMailPassw} placeholder="Password" secureTextEntry={true} value={password} onChangeText={handlePassword} />
+                <TextInput style={styles.inputLogin} placeholder="Логин" inputMode="text" value={login} onChangeText={handleLogin} onFocus={onFocusInput} onBlur={onBlurInput} />
+                <TextInput style={styles.inputMailPassw} placeholder="Адрес электронной почты" inputMode="email" value={mail} onChangeText={handleMail} onFocus={onFocusInput} onBlur={onBlurInput} />
+                <TextInput style={styles.inputMailPassw} placeholder="Пароль" secureTextEntry={!show ? true : false} value={password} onChangeText={handlePassword} onFocus={onFocusInput} onBlur={onBlurInput} />
 
                 <TouchableOpacity style={styles.passwShow} activeOpacity={0.5} onPress={passwShow}>
-                    <Text style={styles.passwShowText}>Show</Text>
+                    <Text style={styles.passwShowText}>{!show ? 'Показать' : "Скрыть"}</Text>
                 </TouchableOpacity>
+                {!button && <View>
+                    <TouchableOpacity style={styles.registerButton} activeOpacity={0.5} onPress={register}>
+                        <Text style={styles.registerButtonText}>Зарегистрироваться</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.registerButton} activeOpacity={0.5} onPress={register}>
-                    <Text style={styles.registerButtonText}>Register</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.loginLink} activeOpacity={0.5} onPress={() => changeScrenn(0)}>
-                    <Text style={styles.loginLinkText}>Already have an account? Log in</Text>
-                </TouchableOpacity>
-
+                    <TouchableOpacity style={styles.loginLink} activeOpacity={0.5} onPress={() => changeScrenn(0)}>
+                        <Text style={styles.loginLinkText}>Уже есть аккаунт? Войти</Text>
+                    </TouchableOpacity>
+                </View>}
             </View>
         </KeyboardAvoidingView>
     )
@@ -144,6 +149,8 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         fontSize: 16,
         lineHeight: 19,
+        marginLeft: 'auto',
+        marginRight: 'auto'
     },
 });
 
